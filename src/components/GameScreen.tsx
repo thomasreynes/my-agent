@@ -18,55 +18,57 @@ export function GameScreen({
 }: GameScreenProps) {
   return (
     <div className="flex flex-col min-h-full">
-      {/* Header — chalkboard menu bar */}
+      {/* Header — antique menu bar with double-rules */}
       <header
-        className="flex items-center justify-between px-3 py-2"
+        className="px-3 py-3 text-center"
         style={{
-          background: 'oklch(0.18 0.05 45 / 0.95)',
-          borderBottom: '1px solid oklch(0.55 0.10 55 / 0.5)',
-          boxShadow: '0 2px 10px oklch(0.08 0.04 40 / 0.7)',
+          background: 'var(--color-surface)',
+          borderBottom: '3px double var(--color-dark-brown)',
         }}
       >
-        <button
-          onClick={onReset}
-          className="text-sm px-3 py-1.5 rounded-lg transition-all duration-150 active:scale-95"
-          style={{
-            fontFamily: 'var(--font-body)',
-            color: '#D8CCB4',
-            background: 'oklch(0.28 0.06 45 / 0.7)',
-            border: '1px solid oklch(0.45 0.08 50 / 0.5)',
-          }}
-        >
-          ← Back
-        </button>
-        <h1
-          className="text-xl tracking-wide"
-          style={{ fontFamily: 'var(--font-display)', color: '#D4883A' }}
-        >
-          Bingo Mixer
-        </h1>
-        <div className="w-16" />
+        <div className="flex items-center justify-between">
+          <button
+            onClick={onReset}
+            className="text-sm px-3 py-1.5 uppercase tracking-wide font-bold transition-all duration-150 active:scale-95"
+            style={{
+              fontFamily: 'var(--font-body)',
+              color: 'var(--color-ivory)',
+              background: 'var(--color-accent)',
+              border: '2px solid var(--color-dark-brown)',
+              borderRadius: 0,
+            }}
+          >
+            ← Back
+          </button>
+          <h1
+            className="text-2xl font-bold uppercase tracking-widest"
+            style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-primary)' }}
+          >
+            Bingo Mixer
+          </h1>
+          <div className="w-16" />
+        </div>
       </header>
 
       {/* Instructions */}
       <p
         className="text-center text-sm py-2 px-4 italic"
-        style={{ fontFamily: 'var(--font-body)', color: '#D8CCB4' }}
+        style={{ fontFamily: 'var(--font-body)', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}
       >
         Tap a square when you find someone who matches.
       </p>
 
-      {/* Bingo banner */}
+      {/* Bingo banner — double-ruled */}
       {hasBingo && (
         <div
-          className="text-center py-2 text-sm font-semibold tracking-widest"
+          className="text-center py-2 text-sm font-bold tracking-widest uppercase"
           style={{
             fontFamily: 'var(--font-display)',
-            background: 'linear-gradient(90deg, #2C1A0E 0%, #6B3A0A 50%, #2C1A0E 100%)',
-            color: '#F5C97A',
-            borderTop: '1px solid #D4883A',
-            borderBottom: '1px solid #D4883A',
-            fontSize: '0.8rem',
+            background: 'var(--color-marked-bg)',
+            color: 'var(--color-accent)',
+            borderTop: '3px double var(--color-dark-brown)',
+            borderBottom: '3px double var(--color-dark-brown)',
+            fontSize: '0.85rem',
           }}
         >
           ☕ BINGO! You got a line!
