@@ -40,10 +40,11 @@ export function GameScreen({
           ← Back
         </button>
         <h1
-          className="text-xl tracking-wide"
+          className="text-xl tracking-wide flex items-center gap-2"
           style={{ fontFamily: 'var(--font-display)', color: '#D4883A' }}
         >
           Bingo Mixer
+          <span className="steam-float-animate" aria-hidden="true">☕</span>
         </h1>
         <div className="w-16" />
       </header>
@@ -59,7 +60,7 @@ export function GameScreen({
       {/* Bingo banner */}
       {hasBingo && (
         <div
-          className="text-center py-2 text-sm font-semibold tracking-widest"
+          className="text-center py-2 text-sm font-semibold tracking-widest banner-drop-animate"
           style={{
             fontFamily: 'var(--font-display)',
             background: 'linear-gradient(90deg, #2C1A0E 0%, #6B3A0A 50%, #2C1A0E 100%)',

@@ -9,7 +9,7 @@ export function BingoModal({ onDismiss }: BingoModalProps) {
       style={{ background: 'oklch(0.08 0.04 40 / 0.82)' }}
     >
       <div
-        className="chalk-border rounded-2xl p-7 max-w-xs w-full text-center animate-[bounce_0.4s_ease-out]"
+        className="chalk-border rounded-2xl p-7 max-w-xs w-full text-center chalkboard-flip-animate"
         style={{
           background: 'linear-gradient(160deg, #3D2010 0%, #2C1A0E 100%)',
         }}
