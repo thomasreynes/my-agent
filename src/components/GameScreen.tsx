@@ -17,28 +17,59 @@ export function GameScreen({
   onReset,
 }: GameScreenProps) {
   return (
-    <div className="flex flex-col min-h-full bg-gray-50">
-      {/* Header */}
-      <header className="flex items-center justify-between p-3 bg-white border-b border-gray-200">
+    <div className="flex flex-col min-h-full">
+      {/* Header — chalkboard menu bar */}
+      <header
+        className="flex items-center justify-between px-3 py-2"
+        style={{
+          background: 'oklch(0.18 0.05 45 / 0.95)',
+          borderBottom: '1px solid oklch(0.55 0.10 55 / 0.5)',
+          boxShadow: '0 2px 10px oklch(0.08 0.04 40 / 0.7)',
+        }}
+      >
         <button
           onClick={onReset}
-          className="text-gray-500 text-sm px-3 py-1.5 rounded active:bg-gray-100"
+          className="text-sm px-3 py-1.5 rounded-lg transition-all duration-150 active:scale-95"
+          style={{
+            fontFamily: 'var(--font-body)',
+            color: '#D8CCB4',
+            background: 'oklch(0.28 0.06 45 / 0.7)',
+            border: '1px solid oklch(0.45 0.08 50 / 0.5)',
+          }}
         >
           ← Back
         </button>
-        <h1 className="font-bold text-gray-900">Bingo Mixer</h1>
-        <div className="w-16"></div>
+        <h1
+          className="text-xl tracking-wide"
+          style={{ fontFamily: 'var(--font-display)', color: '#D4883A' }}
+        >
+          Bingo Mixer
+        </h1>
+        <div className="w-16" />
       </header>
 
       {/* Instructions */}
-      <p className="text-center text-gray-500 text-sm py-2 px-4">
-        Tap a square when you find someone who matches it.
+      <p
+        className="text-center text-sm py-2 px-4 italic"
+        style={{ fontFamily: 'var(--font-body)', color: '#D8CCB4' }}
+      >
+        Tap a square when you find someone who matches.
       </p>
 
-      {/* Bingo indicator */}
+      {/* Bingo banner */}
       {hasBingo && (
-        <div className="bg-amber-100 text-amber-800 text-center py-2 font-semibold text-sm">
-          🎉 BINGO! You got a line!
+        <div
+          className="text-center py-2 text-sm font-semibold tracking-widest"
+          style={{
+            fontFamily: 'var(--font-display)',
+            background: 'linear-gradient(90deg, #2C1A0E 0%, #6B3A0A 50%, #2C1A0E 100%)',
+            color: '#F5C97A',
+            borderTop: '1px solid #D4883A',
+            borderBottom: '1px solid #D4883A',
+            fontSize: '0.8rem',
+          }}
+        >
+          ☕ BINGO! You got a line!
         </div>
       )}
 
