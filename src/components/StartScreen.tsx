@@ -1,13 +1,20 @@
+import type { ThemeId, Theme } from '../types';
+import { themes } from '../data/questions';
+
 interface StartScreenProps {
   onStart: () => void;
+  selectedTheme: ThemeId;
+  onSelectTheme: (themeId: ThemeId) => void;
 }
 
-export function StartScreen({ onStart }: StartScreenProps) {
+export function StartScreen({ onStart, selectedTheme, onSelectTheme }: StartScreenProps) {
+  const activeTheme = themes[selectedTheme];
+
   return (
     <div className="flex flex-col items-center justify-center min-h-full p-6">
       <div className="text-center max-w-xs w-full">
-        {/* Coffee cup icon */}
-        <div className="text-6xl mb-3 select-none" aria-hidden="true">☕</div>
+        {/* Theme icon */}
+        <div className="text-6xl mb-3 select-none" aria-hidden="true">{activeTheme.emoji}</div>
 
         <h1
           className="text-5xl text-amber mb-1 leading-tight"
@@ -16,11 +23,56 @@ export function StartScreen({ onStart }: StartScreenProps) {
           Bingo Mixer
         </h1>
         <p
-          className="text-chalk text-base italic mb-8 tracking-wide"
+          className="text-chalk text-base italic mb-6 tracking-wide"
           style={{ fontFamily: 'var(--font-body)' }}
         >
           Find your people!
         </p>
+
+        {/* Theme selector */}
+        <div className="mb-6">
+          <p
+            className="text-amber-light text-xs uppercase tracking-widest mb-3 text-left"
+            style={{ fontFamily: 'var(--font-display)' }}
+          >
+            Choose a theme
+          </p>
+          <div className="grid grid-cols-2 gap-3">
+            {(Object.values(themes) as Theme[]).map((theme) => {
+              const isSelected = selectedTheme === theme.id;
+              return (
+                <button
+                  key={theme.id}
+                  onClick={() => onSelectTheme(theme.id)}
+                  className="rounded-xl p-4 text-left transition-all duration-150 active:scale-95"
+                  style={{
+                    background: isSelected ? 'oklch(0.32 0.08 50 / 0.9)' : 'oklch(0.22 0.05 45 / 0.85)',
+                    border: isSelected ? '2px solid #D4883A' : '1px solid oklch(0.45 0.08 50 / 0.5)',
+                    outline: 'none',
+                  }}
+                  aria-pressed={isSelected}
+                >
+                  <div className="text-2xl mb-1">{theme.emoji}</div>
+                  <div
+                    className="text-sm font-semibold mb-1"
+                    style={{
+                      fontFamily: 'var(--font-display)',
+                      color: isSelected ? '#F5C97A' : '#D8CCB4',
+                    }}
+                  >
+                    {theme.label}
+                  </div>
+                  <div
+                    className="text-xs leading-snug"
+                    style={{ fontFamily: 'var(--font-body)', color: '#8A7A6A' }}
+                  >
+                    {theme.description}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
 
         {/* Chalkboard instructions panel */}
         <div

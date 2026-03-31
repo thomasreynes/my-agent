@@ -14,3 +14,13 @@ export interface BingoLine {
 }
 
 export type GameState = 'start' | 'playing' | 'bingo';
+
+export type ThemeId = 'icebreaker' | 'office';
+
+export interface Theme {
+  id: ThemeId;
+  label: string;
+  emoji: string;
+  description: string;
+  questions: string[];
+}
