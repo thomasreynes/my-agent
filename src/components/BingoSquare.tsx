@@ -13,30 +13,30 @@ function squareStyle(
 ): React.CSSProperties {
   if (isFreeSpace) {
     return {
-      background: 'linear-gradient(145deg, #3D2010 0%, #2C1A0E 100%)',
-      border: '1px solid #D4883A',
-      color: '#F5C97A',
+      background: '#F0FAF2',
+      border: '1px solid #5C8A6A',
+      color: '#1E3D28',
       cursor: 'default',
     };
   }
   if (isMarked && isWinning) {
     return {
-      background: 'linear-gradient(145deg, #7A4A0A 0%, #5C3008 100%)',
-      border: '2px solid #F5C97A',
-      color: '#F5ECD7',
+      background: '#C8E6CC',
+      border: '2px solid #3D7A52',
+      color: '#1E3D28',
     };
   }
   if (isMarked) {
     return {
-      background: 'linear-gradient(145deg, #5C3D1A 0%, #3D2510 100%)',
-      border: '1px solid #A0632A',
-      color: '#EFE0BE',
+      background: '#EAF4EC',
+      border: '1px solid #5C8A6A',
+      color: '#1E3D28',
     };
   }
   return {
-    background: 'linear-gradient(145deg, #EFE0BE 0%, #E5D4A8 100%)',
-    border: '1px solid #C8A870',
-    color: '#2C1A0E',
+    background: '#FFFFFF',
+    border: '1px solid #D4C9B0',
+    color: '#2A2016',
   };
 }
 
@@ -59,7 +59,7 @@ export function BingoSquare({ square, isWinning, onClick }: BingoSquareProps) {
         fontFamily: 'var(--font-body)',
         boxShadow: isWinning
           ? undefined
-          : 'inset 0 1px 0 oklch(0.95 0.04 70 / 0.3), 0 1px 3px oklch(0.08 0.04 40 / 0.5)',
+          : 'inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 1px 3px rgba(90, 70, 40, 0.1)',
       }}
       aria-pressed={square.isMarked}
       aria-label={square.isFreeSpace ? 'Free space' : square.text}
@@ -67,8 +67,8 @@ export function BingoSquare({ square, isWinning, onClick }: BingoSquareProps) {
       <span className="break-words hyphens-auto">{square.text}</span>
       {square.isMarked && !square.isFreeSpace && (
         <span
-          className="stamp-check absolute top-0.5 right-0.5 text-amber-glow"
-          style={{ fontSize: '0.6rem', lineHeight: 1 }}
+          className="stamp-check absolute top-0.5 right-0.5"
+          style={{ fontSize: '0.6rem', lineHeight: 1, color: '#5C8A6A' }}
           aria-hidden="true"
         >
           ✓

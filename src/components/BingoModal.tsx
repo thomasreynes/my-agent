@@ -6,12 +6,12 @@ export function BingoModal({ onDismiss }: BingoModalProps) {
   return (
     <div
       className="fixed inset-0 flex items-center justify-center p-4 z-50"
-      style={{ background: 'oklch(0.08 0.04 40 / 0.82)' }}
+      style={{ background: 'rgba(42, 32, 22, 0.55)' }}
     >
       <div
-        className="chalk-border rounded-2xl p-7 max-w-xs w-full text-center animate-[bounce_0.4s_ease-out]"
+        className="card-border rounded-2xl p-7 max-w-xs w-full text-center animate-[bounce_0.4s_ease-out]"
         style={{
-          background: 'linear-gradient(160deg, #3D2010 0%, #2C1A0E 100%)',
+          background: '#FFFFFF',
         }}
       >
         {/* Coffee cup celebration */}
@@ -19,7 +19,7 @@ export function BingoModal({ onDismiss }: BingoModalProps) {
 
         <h2
           className="text-4xl mb-1"
-          style={{ fontFamily: 'var(--font-display)', color: '#F5C97A' }}
+          style={{ fontFamily: 'var(--font-display)', color: '#2A2016' }}
         >
           BINGO!
         </h2>
@@ -27,13 +27,13 @@ export function BingoModal({ onDismiss }: BingoModalProps) {
         {/* Decorative rule */}
         <div
           className="mx-auto my-3 h-px w-24"
-          style={{ background: 'linear-gradient(90deg, transparent, #D4883A, transparent)' }}
+          style={{ background: 'linear-gradient(90deg, transparent, #5C8A6A, transparent)' }}
           aria-hidden="true"
         />
 
         <p
           className="text-base italic mb-6"
-          style={{ fontFamily: 'var(--font-body)', color: '#D8CCB4' }}
+          style={{ fontFamily: 'var(--font-body)', color: '#6B6055' }}
         >
           You completed a line!
         </p>
@@ -43,9 +43,9 @@ export function BingoModal({ onDismiss }: BingoModalProps) {
           className="w-full font-semibold py-3 px-6 rounded-xl transition-all duration-150 active:scale-95"
           style={{
             fontFamily: 'var(--font-display)',
-            background: 'linear-gradient(160deg, #D4883A 0%, #B86A1C 100%)',
-            color: '#1A0F07',
-            boxShadow: '0 4px 18px oklch(0.55 0.15 50 / 0.45), inset 0 1px 0 oklch(0.85 0.12 70 / 0.4)',
+            background: 'linear-gradient(160deg, #5C8A6A 0%, #3D6B52 100%)',
+            color: '#FFFFFF',
+            boxShadow: '0 4px 18px rgba(92, 138, 106, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25)',
             letterSpacing: '0.05em',
             fontSize: '0.9rem',
           }}
