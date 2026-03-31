@@ -1,9 +1,11 @@
+import type React from 'react';
 import type { BingoSquareData } from '../types';
 
 interface BingoSquareProps {
   square: BingoSquareData;
   isWinning: boolean;
   onClick: () => void;
+  index?: number;
 }
 
 function squareStyle(
@@ -40,7 +42,7 @@ function squareStyle(
   };
 }
 
-export function BingoSquare({ square, isWinning, onClick }: BingoSquareProps) {
+export function BingoSquare({ square, isWinning, onClick, index }: BingoSquareProps) {
   const style = squareStyle(square.isMarked, isWinning, square.isFreeSpace);
 
   return (
@@ -53,6 +55,7 @@ export function BingoSquare({ square, isWinning, onClick }: BingoSquareProps) {
         'active:scale-95',
         isWinning ? 'winning-glow' : '',
         !square.isMarked && !square.isFreeSpace ? 'hover:brightness-95' : '',
+        index !== undefined ? 'square-animate' : '',
       ].join(' ')}
       style={{
         ...style,
@@ -60,6 +63,7 @@ export function BingoSquare({ square, isWinning, onClick }: BingoSquareProps) {
         boxShadow: isWinning
           ? undefined
           : 'inset 0 1px 0 oklch(0.95 0.04 70 / 0.3), 0 1px 3px oklch(0.08 0.04 40 / 0.5)',
+        ...(index !== undefined ? { '--square-index': index } as React.CSSProperties : {}),
       }}
       aria-pressed={square.isMarked}
       aria-label={square.isFreeSpace ? 'Free space' : square.text}
