@@ -6,47 +6,52 @@ export function StartScreen({ onStart }: StartScreenProps) {
   return (
     <div className="flex flex-col items-center justify-center min-h-full p-6">
       <div className="text-center max-w-xs w-full">
-        {/* Coffee cup icon */}
-        <div className="text-6xl mb-3 select-none" aria-hidden="true">☕</div>
-
-        <h1
-          className="text-5xl text-amber mb-1 leading-tight"
-          style={{ fontFamily: 'var(--font-display)' }}
+        {/* Double-rule header */}
+        <div
+          className="mb-4"
+          style={{ borderTop: '3px double var(--color-dark-brown)', paddingTop: '0.75rem' }}
         >
-          Bingo Mixer
-        </h1>
+          <h1
+            className="text-5xl leading-tight uppercase font-bold tracking-widest"
+            style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-primary)' }}
+          >
+            Bingo Mixer
+          </h1>
+        </div>
+        <div style={{ borderTop: '3px double var(--color-dark-brown)', marginBottom: '1.5rem' }} aria-hidden="true" />
+
         <p
-          className="text-chalk text-base italic mb-8 tracking-wide"
-          style={{ fontFamily: 'var(--font-body)' }}
+          className="text-base italic mb-8 tracking-wide"
+          style={{ fontFamily: 'var(--font-body)', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}
         >
           Find your people!
         </p>
 
-        {/* Chalkboard instructions panel */}
+        {/* Instructions panel with nested double-frame */}
         <div
-          className="chalk-border rounded-xl p-5 mb-8 text-left"
-          style={{ background: 'oklch(0.22 0.05 45 / 0.85)' }}
+          className="nested-frame p-5 mb-8 text-left"
+          style={{ background: 'var(--color-surface)' }}
         >
           <h2
-            className="text-amber-light text-sm uppercase tracking-widest mb-3"
-            style={{ fontFamily: 'var(--font-display)', fontSize: '0.8rem' }}
+            className="text-sm uppercase tracking-widest mb-3 font-bold"
+            style={{ fontFamily: 'var(--font-display)', color: 'var(--color-accent)', fontSize: '0.8rem' }}
           >
             How to play
           </h2>
           <ul
-            className="text-cream text-sm space-y-2 leading-relaxed"
-            style={{ fontFamily: 'var(--font-body)' }}
+            className="text-sm space-y-2 italic"
+            style={{ fontFamily: 'var(--font-body)', color: 'var(--color-text-primary)', lineHeight: 1.6 }}
           >
             <li className="flex gap-2">
-              <span className="text-amber shrink-0">—</span>
+              <span style={{ color: 'var(--color-accent)' }} className="shrink-0">—</span>
               Find people who match each square
             </li>
             <li className="flex gap-2">
-              <span className="text-amber shrink-0">—</span>
+              <span style={{ color: 'var(--color-accent)' }} className="shrink-0">—</span>
               Tap a square when you find a match
             </li>
             <li className="flex gap-2">
-              <span className="text-amber shrink-0">—</span>
+              <span style={{ color: 'var(--color-accent)' }} className="shrink-0">—</span>
               Get 5 in a row to win!
             </li>
           </ul>
@@ -54,13 +59,14 @@ export function StartScreen({ onStart }: StartScreenProps) {
 
         <button
           onClick={onStart}
-          className="w-full font-semibold py-4 px-8 rounded-xl text-lg transition-all duration-150 active:scale-95"
+          className="w-full font-bold py-4 px-8 text-lg uppercase tracking-widest transition-all duration-150 active:scale-95"
           style={{
             fontFamily: 'var(--font-display)',
-            background: 'linear-gradient(160deg, #D4883A 0%, #B86A1C 100%)',
-            color: '#1A0F07',
-            boxShadow: '0 4px 18px oklch(0.55 0.15 50 / 0.45), inset 0 1px 0 oklch(0.85 0.12 70 / 0.4)',
-            letterSpacing: '0.05em',
+            background: 'var(--color-accent)',
+            color: 'var(--color-ivory)',
+            border: '2px solid var(--color-dark-brown)',
+            borderRadius: 0,
+            letterSpacing: '0.1em',
           }}
         >
           Start Game

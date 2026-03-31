@@ -13,30 +13,34 @@ function squareStyle(
 ): React.CSSProperties {
   if (isFreeSpace) {
     return {
-      background: 'linear-gradient(145deg, #3D2010 0%, #2C1A0E 100%)',
-      border: '1px solid #D4883A',
-      color: '#F5C97A',
+      background: 'var(--color-surface)',
+      border: '2px solid var(--color-accent)',
+      color: 'var(--color-text-primary)',
       cursor: 'default',
+      borderRadius: 0,
     };
   }
   if (isMarked && isWinning) {
     return {
-      background: 'linear-gradient(145deg, #7A4A0A 0%, #5C3008 100%)',
-      border: '2px solid #F5C97A',
-      color: '#F5ECD7',
+      background: 'var(--color-win-bg)',
+      border: '2px solid var(--color-accent)',
+      color: 'var(--color-text-primary)',
+      borderRadius: 0,
     };
   }
   if (isMarked) {
     return {
-      background: 'linear-gradient(145deg, #5C3D1A 0%, #3D2510 100%)',
-      border: '1px solid #A0632A',
-      color: '#EFE0BE',
+      background: 'var(--color-marked-bg)',
+      border: '2px solid var(--color-dark-brown)',
+      color: 'var(--color-text-primary)',
+      borderRadius: 0,
     };
   }
   return {
-    background: 'linear-gradient(145deg, #EFE0BE 0%, #E5D4A8 100%)',
-    border: '1px solid #C8A870',
-    color: '#2C1A0E',
+    background: 'var(--color-ivory)',
+    border: '2px solid var(--color-text-muted)',
+    color: 'var(--color-text-primary)',
+    borderRadius: 0,
   };
 }
 
@@ -48,8 +52,8 @@ export function BingoSquare({ square, isWinning, onClick }: BingoSquareProps) {
       onClick={onClick}
       disabled={square.isFreeSpace}
       className={[
-        'relative flex items-center justify-center p-1 text-center rounded',
-        'transition-all duration-150 select-none min-h-[60px] text-[0.65rem] leading-tight',
+        'relative flex items-center justify-center p-1 text-center',
+        'transition-all duration-150 select-none min-h-[60px] leading-tight',
         'active:scale-95',
         isWinning ? 'winning-glow' : '',
         !square.isMarked && !square.isFreeSpace ? 'hover:brightness-95' : '',
@@ -57,21 +61,26 @@ export function BingoSquare({ square, isWinning, onClick }: BingoSquareProps) {
       style={{
         ...style,
         fontFamily: 'var(--font-body)',
-        boxShadow: isWinning
-          ? undefined
-          : 'inset 0 1px 0 oklch(0.95 0.04 70 / 0.3), 0 1px 3px oklch(0.08 0.04 40 / 0.5)',
+        fontSize: '0.6rem',
       }}
       aria-pressed={square.isMarked}
       aria-label={square.isFreeSpace ? 'Free space' : square.text}
     >
-      <span className="break-words hyphens-auto">{square.text}</span>
+      {square.isFreeSpace ? (
+        <span className="flex flex-col items-center gap-0.5">
+          <span className="font-bold uppercase tracking-widest" style={{ fontSize: '0.65rem' }}>FREE</span>
+          <span className="italic" style={{ fontSize: '0.55rem', color: 'var(--color-text-secondary)' }}>— space —</span>
+        </span>
+      ) : (
+        <span className="break-words hyphens-auto">{square.text}</span>
+      )}
       {square.isMarked && !square.isFreeSpace && (
         <span
-          className="stamp-check absolute top-0.5 right-0.5 text-amber-glow"
-          style={{ fontSize: '0.6rem', lineHeight: 1 }}
+          className="stamp-check absolute top-0.5 right-0.5"
+          style={{ fontSize: '0.6rem', lineHeight: 1, color: 'var(--color-accent)' }}
           aria-hidden="true"
         >
-          ✓
+          ✦
         </span>
       )}
     </button>
