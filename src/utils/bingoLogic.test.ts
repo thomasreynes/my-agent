@@ -6,7 +6,7 @@ import {
   getWinningSquareIds,
   type BingoSquareData,
 } from './bingoLogic';
-import { questions, FREE_SPACE } from '../data/questions';
+import { questions, officeHumourQuestions, FREE_SPACE } from '../data/questions';
 
 describe('bingoLogic', () => {
   describe('generateBoard', () => {
@@ -84,6 +84,41 @@ describe('bingoLogic', () => {
       // At least verify structure is correct
       expect(texts1).toHaveLength(24);
       expect(texts2).toHaveLength(24);
+    });
+  });
+
+  describe('generateBoard with custom question pool', () => {
+    it('should use the provided question pool', () => {
+      const board = generateBoard(officeHumourQuestions);
+      const texts = board.filter((s) => !s.isFreeSpace).map((s) => s.text);
+      texts.forEach((text) => {
+        expect(officeHumourQuestions).toContain(text);
+      });
+    });
+
+    it('should not use icebreaker questions when given office humour pool', () => {
+      const board = generateBoard(officeHumourQuestions);
+      const texts = board.filter((s) => !s.isFreeSpace).map((s) => s.text);
+      texts.forEach((text) => {
+        expect(questions).not.toContain(text);
+      });
+    });
+
+    it('should still place FREE_SPACE in the center with a custom pool', () => {
+      const board = generateBoard(officeHumourQuestions);
+      expect(board[12].isFreeSpace).toBe(true);
+      expect(board[12].text).toBe(FREE_SPACE);
+    });
+
+    it('should still generate 25 squares with a custom pool', () => {
+      const board = generateBoard(officeHumourQuestions);
+      expect(board).toHaveLength(25);
+    });
+
+    it('should have unique question texts when using office humour pool', () => {
+      const board = generateBoard(officeHumourQuestions);
+      const texts = board.filter((s) => !s.isFreeSpace).map((s) => s.text);
+      expect(new Set(texts).size).toBe(texts.length);
     });
   });
 

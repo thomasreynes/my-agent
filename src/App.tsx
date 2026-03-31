@@ -9,14 +9,22 @@ function App() {
     board,
     winningSquareIds,
     showBingoModal,
+    selectedTheme,
     startGame,
     handleSquareClick,
     resetGame,
     dismissModal,
+    selectTheme,
   } = useBingoGame();
 
   if (gameState === 'start') {
-    return <StartScreen onStart={startGame} />;
+    return (
+      <StartScreen
+        onStart={startGame}
+        selectedTheme={selectedTheme}
+        onSelectTheme={selectTheme}
+      />
+    );
   }
 
   return (

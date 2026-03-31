@@ -1,5 +1,6 @@
 import { useState, useCallback, useMemo, useEffect } from 'react';
-import type { BingoSquareData, BingoLine, GameState } from '../types';
+import type { BingoSquareData, BingoLine, GameState, ThemeId } from '../types';
+import { themes } from '../data/questions';
 import {
   generateBoard,
   toggleSquare,
@@ -13,6 +14,7 @@ export interface BingoGameState {
   winningLine: BingoLine | null;
   winningSquareIds: Set<number>;
   showBingoModal: boolean;
+  selectedTheme: ThemeId;
 }
 
 export interface BingoGameActions {
@@ -20,6 +22,7 @@ export interface BingoGameActions {
   handleSquareClick: (squareId: number) => void;
   resetGame: () => void;
   dismissModal: () => void;
+  selectTheme: (themeId: ThemeId) => void;
 }
 
 const STORAGE_KEY = 'bingo-game-state';
@@ -30,6 +33,7 @@ interface StoredGameData {
   gameState: GameState;
   board: BingoSquareData[];
   winningLine: BingoLine | null;
+  selectedTheme: ThemeId;
 }
 
 function validateStoredData(data: unknown): data is StoredGameData {
@@ -66,10 +70,13 @@ function validateStoredData(data: unknown): data is StoredGameData {
     return false;
   }
   
+  if (
+    obj.winningLine !== null &&
+    typeof obj.winningLine !== 'object'
+  ) {
+    return false;
+  }
   if (obj.winningLine !== null) {
-    if (typeof obj.winningLine !== 'object') {
-      return false;
-    }
     const line = obj.winningLine as Record<string, unknown>;
     if (
       typeof line.type !== 'string' ||
@@ -80,11 +87,19 @@ function validateStoredData(data: unknown): data is StoredGameData {
       return false;
     }
   }
-  
+
+  const validThemes: ThemeId[] = ['icebreaker', 'office'];
+  if (
+    obj.selectedTheme !== undefined &&
+    !validThemes.includes(obj.selectedTheme as ThemeId)
+  ) {
+    return false;
+  }
+
   return true;
 }
 
-function loadGameState(): Pick<BingoGameState, 'gameState' | 'board' | 'winningLine'> | null {
+function loadGameState(): Pick<BingoGameState, 'gameState' | 'board' | 'winningLine' | 'selectedTheme'> | null {
   // SSR guard
   if (typeof window === 'undefined') {
     return null;
@@ -103,6 +118,7 @@ function loadGameState(): Pick<BingoGameState, 'gameState' | 'board' | 'winningL
         gameState: parsed.gameState,
         board: parsed.board,
         winningLine: parsed.winningLine,
+        selectedTheme: (parsed as { selectedTheme?: ThemeId }).selectedTheme ?? 'icebreaker',
       };
     } else {
       console.warn('Invalid game state data in localStorage, clearing...');
@@ -118,7 +134,7 @@ function loadGameState(): Pick<BingoGameState, 'gameState' | 'board' | 'winningL
   return null;
 }
 
-function saveGameState(gameState: GameState, board: BingoSquareData[], winningLine: BingoLine | null): void {
+function saveGameState(gameState: GameState, board: BingoSquareData[], winningLine: BingoLine | null, selectedTheme: ThemeId): void {
   // SSR guard
   if (typeof window === 'undefined') {
     return;
@@ -130,6 +146,7 @@ function saveGameState(gameState: GameState, board: BingoSquareData[], winningLi
       gameState,
       board,
       winningLine,
+      selectedTheme,
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   } catch (error) {
@@ -150,6 +167,9 @@ export function useBingoGame(): BingoGameState & BingoGameActions {
     () => loadedState?.winningLine || null
   );
   const [showBingoModal, setShowBingoModal] = useState(false);
+  const [selectedTheme, setSelectedTheme] = useState<ThemeId>(
+    () => loadedState?.selectedTheme ?? 'icebreaker'
+  );
 
   const winningSquareIds = useMemo(
     () => getWinningSquareIds(winningLine),
@@ -158,14 +178,18 @@ export function useBingoGame(): BingoGameState & BingoGameActions {
 
   // Save game state to localStorage whenever it changes
   useEffect(() => {
-    saveGameState(gameState, board, winningLine);
-  }, [gameState, board, winningLine]);
+    saveGameState(gameState, board, winningLine, selectedTheme);
+  }, [gameState, board, winningLine, selectedTheme]);
+
+  const selectTheme = useCallback((themeId: ThemeId) => {
+    setSelectedTheme(themeId);
+  }, []);
 
   const startGame = useCallback(() => {
-    setBoard(generateBoard());
+    setBoard(generateBoard(themes[selectedTheme].questions));
     setWinningLine(null);
     setGameState('playing');
-  }, []);
+  }, [selectedTheme]);
 
   const handleSquareClick = useCallback((squareId: number) => {
     setBoard((currentBoard) => {
@@ -203,9 +227,11 @@ export function useBingoGame(): BingoGameState & BingoGameActions {
     winningLine,
     winningSquareIds,
     showBingoModal,
+    selectedTheme,
     startGame,
     handleSquareClick,
     resetGame,
     dismissModal,
+    selectTheme,
   };
 }
